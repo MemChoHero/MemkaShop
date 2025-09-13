@@ -1,8 +1,7 @@
-﻿namespace MemkaShop.Infrastructure.Persistence.Interfaces
+﻿namespace MemkaShop.Infrastructure.Persistence.Interfaces;
+
+public interface IHasSlug
 {
-    public interface IHasSlug
-    {
-        public string? Slug { get; set; }
-        public string SlugSource { get; }
-    }
+    public string? Slug { get; set; }
+    public string SlugSource { get; }
 }

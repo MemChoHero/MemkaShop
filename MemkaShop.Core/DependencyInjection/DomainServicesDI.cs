@@ -2,15 +2,14 @@
 using MemkaShop.Domain.Services.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace MemkaShop.Core.DependencyInjection
+namespace MemkaShop.Core.DependencyInjection;
+    
+public static class DomainServicesDI
 {
-    public static class DomainServicesDI
+    public static IServiceCollection AddDomainServices(this IServiceCollection services)
     {
-        public static IServiceCollection AddDomainServices(this IServiceCollection services)
-        {
-            services.AddTransient<ISeedDatabaseService, SeedDatabaseService>();
+        services.AddTransient<ISeedDatabaseService, SeedDatabaseService>();
 
-            return services;
-        }
+        return services;
     }
 }

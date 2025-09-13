@@ -1,7 +1,6 @@
-﻿namespace MemkaShop.Domain.Services.Interfaces
+﻿namespace MemkaShop.Domain.Services.Interfaces;
+    
+public interface ISeedDatabaseService
 {
-    public interface ISeedDatabaseService
-    {
-        Task Seed();
-    }
+    Task Seed();
 }

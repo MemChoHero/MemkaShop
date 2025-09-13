@@ -20,4 +20,8 @@
     <ProjectReference Include="..\MemkaShop.Domain\MemkaShop.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Persistence\Configuration\" />
+  </ItemGroup>
+
 </Project>

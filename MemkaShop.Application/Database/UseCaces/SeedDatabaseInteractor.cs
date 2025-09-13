@@ -1,19 +1,11 @@
 ﻿using MemkaShop.Domain.Services.Interfaces;
 
-namespace MemkaShop.Application.Database.UseCaces
+namespace MemkaShop.Application.Database.UseCaces;
+
+public class SeedDatabaseInteractor(ISeedDatabaseService service) 
 {
-    public class SeedDatabaseInteractor
+    public async Task Invoke()
     {
-        private readonly ISeedDatabaseService _service;
-
-        public SeedDatabaseInteractor(ISeedDatabaseService service) 
-        {
-            _service = service;
-        }
-
-        public async Task Invoke()
-        {
-            await _service.Seed();
-        }
+        await service.Seed();
     }
 }

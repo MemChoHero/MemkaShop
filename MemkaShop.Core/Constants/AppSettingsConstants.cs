@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MemkaShop.Core.Constants
+namespace MemkaShop.Core.Constants;
+
+public static class AppSettingsConstants
 {
-    public static class AppSettingsConstants
-    {
-        public static string ConnectionString { get; } = "ConnectionStrings:DefaultConnection";
-    }
+    public static string ConnectionString { get; } = "ConnectionStrings:DefaultConnection";
 }

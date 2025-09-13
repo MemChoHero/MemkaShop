@@ -1,23 +1,45 @@
 ﻿using MemkaShop.Domain.InfrastructureInterfaces.Persistence;
 using MemkaShop.Infrastructure.Persistence.Factories;
 
-namespace MemkaShop.Infrastructure.Persistence.Seeders
+namespace MemkaShop.Infrastructure.Persistence.Seeders;
+
+public class DatabaseSeeder(AppDbContext appDbContext) : IDatabaseSeeder
 {
-    public class DatabaseSeeder : IDatabaseSeeder
+    public async Task RunAsync()
     {
-        private readonly AppDbContext _db;
+        await SeedBrandsAsync();
+        await SeedBrandsAndCategoriesAsync();
 
-        public DatabaseSeeder(AppDbContext appDbContext) 
+        await appDbContext.SaveChangesAsync();
+    }
+
+    private async Task SeedBrandsAsync()
+    {
+        var brands = BrandFactory.GenerateMany(20);
+        await appDbContext.AddRangeAsync(brands);
+    }
+
+    private async Task SeedBrandsAndCategoriesAsync()
+    {
+        var categories = CategoryFactory.GenerateMany(5);
+        var products = ProductFactory.GenerateMany(100);
+
+        await using var transaction = await appDbContext.Database.BeginTransactionAsync();
+
+        await appDbContext.AddRangeAsync(categories);
+        await appDbContext.SaveChangesAsync();
+
+        foreach (var product in products)
         {
-            _db = appDbContext;
+            var category = categories.ToList()[new Random().Next(0, categories.Count)];
+
+            product.Categories.Add(category);
         }
 
-        public async Task RunAsync()
-        {
-            var brands = BrandFactory.GenerateMany();
+        await appDbContext.AddRangeAsync(products);
+        await appDbContext.SaveChangesAsync();
 
-            await _db.AddRangeAsync(brands);
-            await _db.SaveChangesAsync();
-        }
+        await transaction.CommitAsync();
     }
 }
+

@@ -1,7 +1,6 @@
-﻿namespace MemkaShop.Domain.InfrastructureInterfaces.Persistence
+﻿namespace MemkaShop.Domain.InfrastructureInterfaces.Persistence;
+
+public interface IDatabaseSeeder
 {
-    public interface IDatabaseSeeder
-    {
-        Task RunAsync();
-    }
+    Task RunAsync();
 }

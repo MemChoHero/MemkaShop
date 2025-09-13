@@ -1,20 +1,12 @@
 ﻿using MemkaShop.Domain.InfrastructureInterfaces.Persistence;
 using MemkaShop.Domain.Services.Interfaces;
 
-namespace MemkaShop.Domain.Services
+namespace MemkaShop.Domain.Services;
+
+public class SeedDatabaseService(IDatabaseSeeder seeder)  : ISeedDatabaseService
 {
-    public class SeedDatabaseService : ISeedDatabaseService
+    public async Task Seed()
     {
-        private readonly IDatabaseSeeder _seeder;
-
-        public SeedDatabaseService(IDatabaseSeeder seeder) 
-        {
-            _seeder = seeder;
-        }
-
-        public async Task Seed()
-        {
-            await _seeder.RunAsync();
-        }
+        await seeder.RunAsync();
     }
 }
