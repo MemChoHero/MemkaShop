@@ -4,7 +4,7 @@ namespace MemkaShop.Application.Database.UseCaces;
 
 public class SeedDatabaseInteractor(ISeedDatabaseService service) 
 {
-    public async Task Invoke()
+    public async Task InvokeAsync()
     {
         await service.Seed();
     }

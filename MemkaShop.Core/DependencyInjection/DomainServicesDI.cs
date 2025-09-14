@@ -9,6 +9,7 @@ public static class DomainServicesDI
     public static IServiceCollection AddDomainServices(this IServiceCollection services)
     {
         services.AddTransient<ISeedDatabaseService, SeedDatabaseService>();
+        services.AddTransient<IAuthService, AuthService>();
 
         return services;
     }
