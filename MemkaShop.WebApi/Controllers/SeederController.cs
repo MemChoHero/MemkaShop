@@ -10,13 +10,12 @@ public class SeederController(
     ILogger<SeederController> logger,
     IWebHostEnvironment env) : ControllerBase
 {
-
-    [HttpPost(Name = "seed")]
+    [HttpPost("/seed")]
     public async Task<IActionResult> Seed()
     {
         if (env.IsProduction()) return NotFound();
         
-        await interactor.Invoke();
+        await interactor.InvokeAsync();
 
         logger.LogInformation("Seeding successfully");
 
