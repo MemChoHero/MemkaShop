@@ -1,3 +1,4 @@
+using FluentValidation;
 using MemkaShop.Application.Auth.Commands;
 using MemkaShop.Application.Auth.Queries;
 using MemkaShop.Application.Auth.UseCases;
@@ -28,7 +29,6 @@ public class AuthController(
     public async Task<IActionResult> Login([FromBody] LoginQuery query)
     {
         var response = await loginInteractor.InvokeAsync(query);
-
         if (!response)
             return Unauthorized(new { Error = "Invalid credentials" });
 
@@ -44,6 +44,8 @@ public class AuthController(
         };
         
         Response.Cookies.Append("refresh_token", refreshToken, cookieOptions);
+        
+        logger.LogInformation($"User {query.Email} logged in successfully");
 
         return Ok(new { AccessToken = accessToken });
     }
@@ -51,7 +53,7 @@ public class AuthController(
     [HttpPost("/refresh")]
     public IActionResult Refresh()
     {
-        if (!Request.Cookies.TryGetValue("refreshToken", out var refreshToken))
+        if (!Request.Cookies.TryGetValue("refresh_token", out var refreshToken))
             return Unauthorized(new { Error = "No refresh token provided" });
 
         var email = "";
@@ -77,6 +79,8 @@ public class AuthController(
         };
         
         Response.Cookies.Append("refresh_token", newRefreshToken, cookieOptions);
+        
+        logger.LogInformation($"User {email} refreshed successfully");
         
         return Ok(new { AccessToken = accessToken });
     }
