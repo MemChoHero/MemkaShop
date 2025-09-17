@@ -1,6 +1,9 @@
+using FluentValidation;
+using MemkaShop.Application.Auth.Validation;
 using MemkaShop.Core.Constants;
 using MemkaShop.Core.DependencyInjection;
 using MemkaShop.WebApi.Jwt;
+using MemkaShop.WebApi.Middlewares;
 using MemkaShop.WebApi.Settings;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
@@ -20,6 +23,7 @@ builder.Services.AddInteractors();
 builder.Services.AddRepositories();
 builder.Services.AddSecurity();
 
+builder.Services.AddValidatorsFromAssembly(typeof(LoginQueryValidator).Assembly);
 builder.Services.AddTransient<JwtProcessor>();
 
 builder.Services.Configure<AuthOptions>(builder.Configuration.GetSection("AuthOptions"));
@@ -51,6 +55,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseMiddlewares();
 
 app.UseHttpsRedirection();
 
